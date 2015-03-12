@@ -9,36 +9,45 @@ namespace Diplomacy
 {
     class BoardGraph
     {
-        private HashSet<BoardNode> Nodes { get; set; }
+        public HashSet<BoardNode> Nodes { get; set; }
 
 
     }
 
     class BoardNode
     {
-        private string Name { get; set; }
+        public string Name { get; set; }
 
-        private Unit Unit { get; set; } //also in coastLine.
+        public Unit Unit { get; set; } //also in coastLine.
 
-        private Force Owner { get; set; }
+        public Force Owner { get; set; }
 
-        private SpaceType SpaceType { get; set; }
+        public SpaceType SpaceType { get; set; }
 
-        private SupplyCentre SupplyCentre { get; set; }
+        public SupplyCentre SupplyCentre { get; set; }
 
-        private HashSet<BoardNode> Neighbors { get; set; }
+        public HashSet<BoardNode> NeighborLands { get; set; } //also in coastLine. //careful both ways ! //todo only land ?
 
-        private HashSet<CoastLine> CoastLines { get; set; }
+        public HashSet<CoastLine> CoastLines { get; set; }
     }
 
     class CoastLine
     {
-        private string Name { get; set; }
+        public string Name { get; set; }
 
-        private Unit Unit { get; set; }
+        public Unit Unit { get; set; }
+
+        public HashSet<BoardNode> Seas { get; set; }
     }
 
-    enum Unit
+    class Unit
+    {
+        public UnitType UnitType { get; set; }
+
+        public Force Owner { get; set; }
+    }
+
+    enum UnitType
     {
         Army,
         Fleet
@@ -46,10 +55,10 @@ namespace Diplomacy
 
     class SupplyCentre
     {
-        private Force OriginalOwner { get; set; } //needed ?
+        public Force OriginalOwner { get; set; } //needed ?
 
-        private SpaceType SpaceType { get; set; }
-    } 
+        public SpaceType SpaceType { get; set; }
+    }
 
     enum Force
     {
@@ -66,7 +75,7 @@ namespace Diplomacy
     {
         Land,
         Sea,
-        Coast
+        //Coast //just means that it has at least one Sea type neighbor //todo get rid of it
     }
 
 }
