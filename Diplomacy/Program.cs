@@ -10,6 +10,8 @@ namespace Diplomacy
     {
         static void Main(string[] args)
         {
+            //build board
+            //todo
         }
     }
 }
