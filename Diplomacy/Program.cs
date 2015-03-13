@@ -11,37 +11,14 @@ namespace Diplomacy
     {
         static void Main(string[] args)
         {
-            //build test board
 
-            //todo use constuctors
-            var nodeA = new BoardNode()
-            {
-               Name = "A",
-               SpaceType = SpaceType.Land
-            };
+        }
 
-            var nodeB = new BoardNode()
-            {
-                Name = "B",
-                SpaceType = SpaceType.Sea
-            };
+        static void CreateProvinceNodes()
+        {
+            //data from http://en.wikibooks.org/wiki/Diplomacy/Geography
 
-            var nodeC = new BoardNode()
-            {
-                Name = "C",
-                SpaceType = SpaceType.Sea
-            };
-
-            var nodeD = new BoardNode()
-            {
-                Name = "D",
-                SpaceType = SpaceType.Sea
-            };
-
-            //nodeA.NeighborLands.Add(nodeB);
-            //nodeB.NeighborLands.Add(nodeC);
-            //nodeC.NeighborLands.Add(nodeD);
-            //nodeD.NeighborLands.Add(nodeA);
+            var NorthAfrica = new Province("North Africa", "NAF", "Africa", SpaceType.Land);
         }
     }
 }
