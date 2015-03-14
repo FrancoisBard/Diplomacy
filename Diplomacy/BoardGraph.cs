@@ -27,18 +27,29 @@ namespace Diplomacy
 
         public HashSet<CoastLine> CoastLines { get; set; }
 
-        public HashSet<ILocation> Neighbors { get; set; }
+        public HashSet<ILocation> Neighbors { get; private set; }
 
         public SupplyCentre SupplyCentre { get; set; }
 
         public Unit Unit { get; set; } //also in coastLine.        
-        
+
         public Province(string name, string abbreviation, string region, SpaceType spaceType)
         {
             Name = name;
             Abbreviation = abbreviation;
             Region = region;
             SpaceType = spaceType;
+            CoastLines = new HashSet<CoastLine>();
+            Neighbors = new HashSet<ILocation>();
+        }
+
+        public void AddNeighbor(params ILocation[] locations)
+        {
+            foreach (var location in locations)
+            {
+                Neighbors.Add(location);
+                location.Neighbors.Add(this);
+            }
         }
     }
 
@@ -50,11 +61,20 @@ namespace Diplomacy
 
         public string Region { get; set; }
 
-        public SpaceType SpaceType { get; set; } //always coastLine
+        public SpaceType SpaceType { get; set; } //always coast
 
-        public HashSet<ILocation> Neighbors { get; set; }
+        public HashSet<ILocation> Neighbors { get; private set; }
 
         public Unit Unit { get; set; }
+
+        public CoastLine(string name, string abbreviation, string region)
+        {
+            Name = name;
+            Abbreviation = abbreviation;
+            Region = region;
+            SpaceType = SpaceType.Coastline;
+            Neighbors = new HashSet<ILocation>();
+        }
     }
 
     interface ILocation
@@ -67,7 +87,7 @@ namespace Diplomacy
 
         SpaceType SpaceType { get; set; }
 
-        HashSet<ILocation> Neighbors { get; set; }
+        HashSet<ILocation> Neighbors { get; }
 
         Unit Unit { get; set; }
     }
@@ -114,8 +134,17 @@ namespace Diplomacy
                 case SpaceType.Land:
                     //ok if the unit is an army
                     return UnitType == UnitType.Army;
-                case SpaceType.Coast:
-                    //ok if the unit is an army
+                case SpaceType.LandWithOneCoastline:
+                    //ok for both fleets or armies
+                    return true;
+                case SpaceType.LandWithTwoCoastlines:
+                    //ok if the unit is an army (a fleet has to choose which coasline to go to)
+                    return UnitType == UnitType.Army;
+                case SpaceType.Hybrid:
+                    //ok for both fleets or armies
+                    return true;
+                case SpaceType.Coastline:
+                    //ok if the unit is a fleet (an army has to choose the province)
                     return UnitType == UnitType.Fleet;
             }
 
@@ -151,8 +180,11 @@ namespace Diplomacy
     enum SpaceType
     {
         Land,
+        LandWithOneCoastline,
+        LandWithTwoCoastlines,
+        Hybrid, //a land you can go through
         Sea,
-        Coast
+        Coastline //no need for hybrid i think
     }
 
 }
