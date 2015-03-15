@@ -11,7 +11,7 @@ namespace Diplomacy
     {
         private OrderType OrderType { get; set; }
 
-        public static Order Parse(string order)
+        public static MoveOrder Parse(string order)
         {
             var moveRegex = new Regex(@"(?<unitType>\w) (?<origin>\w*)-(?<destination>\w*)", RegexOptions.IgnoreCase);
 
@@ -19,61 +19,67 @@ namespace Diplomacy
 
             if (!match.Success)
             {
-                throw new ArgumentException();
+                throw new ArgumentException("invalid order");
             }
 
             var unitType = match.Groups["unitType"].Value.ToUpperInvariant();
             var origin = match.Groups["origin"].Value.ToUpperInvariant();
             var destination = match.Groups["destination"].Value.ToUpperInvariant();
 
-            var originLocation = Program.Board.Locations.Single(l => l.Abbreviation == origin);
-            var destinationLocation = Program.Board.Locations.Single(l => l.Abbreviation == destination);
+            return new MoveOrder(unitType, origin, destination);
+        }
 
-            UnitType unitTypeEnum;
+        protected static UnitType ParseUnitType(string unitType)
+        {
             switch (unitType)
             {
                 case "A":
-                    unitTypeEnum = UnitType.Army;
-                    break;
+                    return UnitType.Army;
                 case "F":
-                    unitTypeEnum = UnitType.Fleet;
-                    break;
+                    return UnitType.Fleet;
                 default:
-                    throw new Exception();
-            }
-
-            return new MoveOrder(unitTypeEnum, originLocation, destinationLocation);
-        }
-
-        class MoveOrder : Order
-        {
-            public UnitType UnitType { get; set; }
-
-            public ILocation Origin { get; set; }
-
-            public ILocation Destination { get; set; }
-
-            public MoveOrder(UnitType unitType, ILocation origin, ILocation destination)
-            {
-                UnitType = unitType;
-                Origin = origin;
-                Destination = destination;
-            }
-
-            public Boolean Validate() // todo move it back up in Order.Parse ?
-            {
-                return UnitType == Origin.Unit.UnitType && Origin.Unit.CanMoveTo(Destination); //todo should call canmoveto
-            }
-
-            public void Move()
-            {
-                Origin.Unit.MoveTo(Destination);
+                    throw new Exception("Unknown unit type");
             }
         }
 
         public override string ToString()
         {
             throw new NotImplementedException();
+        }
+    }
+
+    class MoveOrder : Order
+    {
+        public UnitType UnitType { get; set; }
+
+        public ILocation Origin { get; set; }
+
+        public ILocation Destination { get; set; }
+
+        public MoveOrder(string unitType, string origin, string destination)
+            : this(
+            ParseUnitType(unitType),
+            Program.Board.Locations.Single(l => l.Abbreviation == origin),
+            Program.Board.Locations.Single(l => l.Abbreviation == destination))
+        {
+        }
+
+        public MoveOrder(UnitType unitType, ILocation origin, ILocation destination)
+        {
+            UnitType = unitType;
+            Origin = origin;
+            Destination = destination;
+        }
+
+        public Boolean Validate()
+        {
+            var unit = Origin.Unit;
+            return unit != null && UnitType == unit.UnitType && unit.CanMoveTo(Destination);
+        }
+
+        public void Move()
+        {
+            Origin.Unit.MoveTo(Destination);
         }
     }
 

@@ -163,10 +163,9 @@ namespace Diplomacy
                 case SpaceType.Coastline:
                     //ok if the unit is a fleet (an army has to choose the province)
                     return UnitType == UnitType.Fleet;
+                default:
+                    throw new Exception();
             }
-
-            //unreachable
-            return false;
         }
     }
 

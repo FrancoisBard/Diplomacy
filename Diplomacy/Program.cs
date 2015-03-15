@@ -17,8 +17,30 @@ namespace Diplomacy
 
             while (true)
             {
-                ListUnitLocations(Board);
-                Console.ReadKey();
+                try
+                {
+                    ListUnitLocations(Board);
+
+                    Console.WriteLine();
+
+                    var order = Console.ReadLine();
+                    var moveOrder = Order.Parse(order);
+                    if (!moveOrder.Validate())
+                    {
+                        Console.WriteLine("invalid move");
+                        continue;
+                    }
+
+                    moveOrder.Move();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                finally
+                {
+                    Console.WriteLine();
+                }
             }
         }
 
