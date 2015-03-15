@@ -9,12 +9,28 @@ namespace Diplomacy
 {
     class Program
     {
+        public static Board Board;
+
         static void Main(string[] args)
         {
+            Board = CreateEuropeBoard();
 
+            while (true)
+            {
+                ListUnitLocations(Board);
+                Console.ReadKey();
+            }
         }
 
-        static void CreateEuropeBoard()
+        static void ListUnitLocations(Board board)
+        {
+            foreach (var unit in board.Units)
+            {
+                Console.WriteLine("{0} in {1}", unit.UnitType, unit.Location.Name);
+            }
+        }
+
+        static Board CreateEuropeBoard()
         {
             var europeBoard = new Board();
 
@@ -341,6 +357,8 @@ namespace Diplomacy
                 berlinUnit, munichUnit, veniceUnit, romeUnit, naplesUnit, viennaUnit, triesteUnit, budapestUnit,
                 constantinopleUnit, ankaraUnit, smyrnaUnit, saintPetersburgUnit, moscowUnit, sevastopolUnit, warsawUnit
             };
+
+            return europeBoard;
         }
     }
 }
