@@ -16,6 +16,8 @@ namespace Diplomacy
 
         static void CreateEuropeBoard()
         {
+            var europeBoard = new Board();
+
             //create province nodes. Data from http://en.wikibooks.org/wiki/Diplomacy/Geography + a few missing.
             var NorthAfrica = new Province("North Africa", "NAF", "Africa", SpaceType.LandWithOneCoastline);
             var Tunis = new Province("Tunis", "TUN", "Africa", SpaceType.LandWithOneCoastline);
@@ -99,7 +101,19 @@ namespace Diplomacy
             //Siberia SIB Impassable areas 
             //Switzerland SWI Impassable areas 
 
-            //coastlines
+            //add provinces to the board
+            europeBoard.Locations = new HashSet<ILocation>() { 
+                NorthAfrica, Tunis, Bohemia, Budapest, Galacia, Trieste, Tyrolia, Vienna, Bulgaria, Greece, Rumania,
+                Serbia, Albania, Clyde, Edinburgh, Liverpool, London, Wales, Yorkshire, Brest, Burgundy, Gascony, 
+                Marseilles, Paris, Picardy, Berlin, Kiel, Munich, Prussia, Ruhr, Silesia, Spain, Portugal, Apulia,
+                Naples, Piedmont, Rome, Tuscany, Venice, Belgium, Holland, Finland, Livonia, Moscow, Sevastopol, 
+                SaintPetersburg, Ukraine, Warsaw, Denmark, Norway, Sweden, Ankara, Armenia, Constantinople, Smyrna, 
+                Syria, BarentsSea, EnglishChannel, HeligolandBight, IrishSea, MidAtlanticOcean, NorthAtlanticOcean, 
+                NorthSea, NorwegianSea, Skagerrak, BalticSea,  GulfOfBothnia, AdriaticSea, BlackSea, 
+                EasternMediterraneanSea, AeganSea, GulfOfLyons, IonianSea, TyrrhenianSea, WesternMediterraneanSea
+            };
+
+            //coastlines //todo should we add them to the board ?
             var SaintPetersburgNorthCoast = new CoastLine("Saint Petersburg North Coast", "STP NC", "Russia");
             var SaintPetersburgSouthCoast = new CoastLine("Saint Petersburg South Coast", "STP SC", "Russia");
             var SpainNorthCoast = new CoastLine("Spain North Coast", "SPA NC", "Iberia");
@@ -121,7 +135,6 @@ namespace Diplomacy
             NorthAtlanticOcean.AddNeighbor(NorwegianSea, Clyde, Liverpool, IrishSea, MidAtlanticOcean);
             NorwegianSea.AddNeighbor(BarentsSea, Norway, NorthSea, Edinburgh, Clyde, NorthAtlanticOcean);
             BarentsSea.AddNeighbor(SaintPetersburg, Norway, NorwegianSea);
-
 
             //scandinavian lands
             Finland.AddNeighbor(Norway, Sweden, GulfOfBothnia, SaintPetersburg);
@@ -284,6 +297,14 @@ namespace Diplomacy
             var swedenCentre = new SupplyCentre(Sweden);
             var denmarkCentre = new SupplyCentre(Denmark);
 
+            //add supply centres to the board
+            europeBoard.SupplyCentres = new HashSet<SupplyCentre>() { 
+                portugalCentre, spainCentre, brestCentre, parisCentre, marseillesCentre, edinburghCentre,
+                liverpoolCentre, londonCentre, belgiumCentre, hollandCentre, kielCentre, berlinCentre, munichCentre,
+                veniceCentre, romeCentre, naplesCentre, viennaCentre, triesteCentre, budapestCentre, saintPetersburgCentre, moscowCentre, sevastopolCentre, warsawCentre, serbiaCentre, rumaniaCentre,
+                bulgariaCentre, greeceCentre, tunisCentre, constantinopleCentre, ankaraCentre, smyrnaCentre, norwayCentre, swedenCentre, denmarkCentre
+            };
+
             //initialize units
             var marseillesUnit = new Unit(UnitType.Army, Force.France, Marseilles);
             var parisUnit = new Unit(UnitType.Army, Force.France, Paris);
@@ -313,6 +334,13 @@ namespace Diplomacy
             var moscowUnit = new Unit(UnitType.Army, Force.Russia, Moscow);
             var sevastopolUnit = new Unit(UnitType.Fleet, Force.Russia, Sevastopol);
             var warsawUnit = new Unit(UnitType.Army, Force.Russia, Warsaw);
+
+            //add units to the board
+            europeBoard.Units = new HashSet<Unit>() {
+                marseillesUnit, parisUnit, brestUnit, edinburghUnit, liverpoolUnit, londonUnit, kielUnit,
+                berlinUnit, munichUnit, veniceUnit, romeUnit, naplesUnit, viennaUnit, triesteUnit, budapestUnit,
+                constantinopleUnit, ankaraUnit, smyrnaUnit, saintPetersburgUnit, moscowUnit, sevastopolUnit, warsawUnit
+            };
         }
     }
 }

@@ -8,11 +8,13 @@ using System.Threading.Tasks;
 
 namespace Diplomacy
 {
-    class BoardGraph
+    class Board
     {
-        public HashSet<Province> Nodes { get; set; }
+        public HashSet<ILocation> Locations { get; set; }
 
+        public HashSet<SupplyCentre> SupplyCentres { get; set; }
 
+        public HashSet<Unit> Units { get; set; }
     }
 
     class Province : ILocation
@@ -75,6 +77,15 @@ namespace Diplomacy
             SpaceType = SpaceType.Coastline;
             Neighbors = new HashSet<ILocation>();
         }
+
+        public void AddNeighbor(params ILocation[] locations)
+        {
+            foreach (var location in locations)
+            {
+                Neighbors.Add(location);
+                location.Neighbors.Add(this);
+            }
+        }
     }
 
     interface ILocation
@@ -99,6 +110,15 @@ namespace Diplomacy
         public Force Owner { get; set; }
 
         public ILocation Location { get; set; }
+
+        public Unit(UnitType unitType, Force owner, ILocation location)
+        {
+            UnitType = unitType;
+            Owner = owner;
+            Location = location;
+
+            Location.Unit = this;
+        }
 
         public void MoveTo(ILocation location)
         {
@@ -140,9 +160,6 @@ namespace Diplomacy
                 case SpaceType.LandWithTwoCoastlines:
                     //ok if the unit is an army (a fleet has to choose which coasline to go to)
                     return UnitType == UnitType.Army;
-                case SpaceType.Hybrid:
-                    //ok for both fleets or armies
-                    return true;
                 case SpaceType.Coastline:
                     //ok if the unit is a fleet (an army has to choose the province)
                     return UnitType == UnitType.Fleet;
@@ -161,9 +178,17 @@ namespace Diplomacy
 
     class SupplyCentre
     {
-        //public SpaceType SpaceType { get; set; } //needed ?
+        public Province Province { get; set; }
 
-        public Force Owner { get; set; }
+        public Force? Owner { get; set; }
+
+        public SupplyCentre(Province province, Force? owner = null)
+        {
+            Province = province;
+            Owner = owner;
+
+            Province.SupplyCentre = this;
+        }
     }
 
     enum Force
@@ -182,9 +207,8 @@ namespace Diplomacy
         Land,
         LandWithOneCoastline,
         LandWithTwoCoastlines,
-        Hybrid, //a land you can go through
         Sea,
-        Coastline //no need for hybrid i think
+        Coastline
     }
 
 }
