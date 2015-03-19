@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using Diplomacy.Board;
+using Diplomacy.Orders;
 
 namespace Diplomacy
 {
     class Program
     {
-        public static Board Board;
+        public static Board.Board Board;
 
         static void Main(string[] args)
         {
@@ -40,7 +42,7 @@ namespace Diplomacy
             }
         }
 
-        static void ListUnitLocations(Board board)
+        static void ListUnitLocations(Board.Board board)
         {
             foreach (var unit in board.Units)
             {
@@ -48,9 +50,9 @@ namespace Diplomacy
             }
         }
 
-        static Board CreateEuropeBoard()
+        static Board.Board CreateEuropeBoard()
         {
-            var europeBoard = new Board();
+            var europeBoard = new Board.Board();
 
             //create province nodes. Data from http://en.wikibooks.org/wiki/Diplomacy/Geography + a few missing.
             var NorthAfrica = new Province("North Africa", "NAF", "Africa", SpaceType.LandWithOneCoastline);

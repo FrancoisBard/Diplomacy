@@ -41,14 +41,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Board.cs" />
-    <Compile Include="OrderParser.cs" />
+    <Compile Include="Board\Board.cs" />
+    <Compile Include="Board\CoastLine.cs" />
+    <Compile Include="Board\Force.cs" />
+    <Compile Include="Board\ILocation.cs" />
+    <Compile Include="Board\Province.cs" />
+    <Compile Include="Board\SpaceType.cs" />
+    <Compile Include="Board\SupplyCentre.cs" />
+    <Compile Include="Board\Unit.cs" />
+    <Compile Include="Board\UnitType.cs" />
+    <Compile Include="Orders\IOrder.cs" />
+    <Compile Include="Orders\MoveOrder.cs" />
+    <Compile Include="Orders\OrderParser.cs" />
+    <Compile Include="Orders\OrderSolver.cs" />
+    <Compile Include="Orders\OrderType.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
