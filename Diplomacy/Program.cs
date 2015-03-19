@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Diplomacy
 {
@@ -23,15 +19,15 @@ namespace Diplomacy
 
                     Console.WriteLine();
 
-                    var order = Console.ReadLine();
-                    var moveOrder = Order.Parse(order);
-                    if (!moveOrder.Validate())
+                    var orderString = Console.ReadLine();
+                    var order = OrderParser.Parse(orderString);
+                    if (!order.Validate())
                     {
                         Console.WriteLine("invalid move");
                         continue;
                     }
 
-                    moveOrder.Move();
+                    order.Execute();
                 }
                 catch (Exception ex)
                 {

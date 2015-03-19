@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace Diplomacy
 {
-    class Order
+    class OrderParser
     {
         private OrderType OrderType { get; set; }
 
-        public static MoveOrder Parse(string order)
+        public static IOrder Parse(string order)
         {
             var moveRegex = new Regex(@"(?<unitType>\w) (?<origin>\w*)-(?<destination>\w*)", RegexOptions.IgnoreCase);
 
@@ -29,7 +28,7 @@ namespace Diplomacy
             return new MoveOrder(unitType, origin, destination);
         }
 
-        protected static UnitType ParseUnitType(string unitType)
+        public static UnitType ParseUnitType(string unitType)
         {
             switch (unitType)
             {
@@ -41,6 +40,48 @@ namespace Diplomacy
                     throw new Exception("Unknown unit type");
             }
         }
+    }
+
+    interface IOrder
+    {
+        Boolean Validate();
+        void Execute();
+    }
+
+    class MoveOrder : IOrder
+    {
+        private UnitType UnitType { get; set; }
+
+        private ILocation Origin { get; set; }
+
+        private ILocation Destination { get; set; }
+
+        public MoveOrder(string unitType, string origin, string destination)
+            : this(
+            OrderParser.ParseUnitType(unitType),
+            Program.Board.Locations.Single(l => l.Abbreviation == origin),
+            Program.Board.Locations.Single(l => l.Abbreviation == destination))
+        {
+        }
+
+        private MoveOrder(UnitType unitType, ILocation origin, ILocation destination)
+        {
+            UnitType = unitType;
+            Origin = origin;
+            Destination = destination;
+        }
+
+        //shouldn't be here ?
+        public Boolean Validate()
+        {
+            var unit = Origin.Unit;
+            return unit != null && UnitType == unit.UnitType && unit.CanMoveTo(Destination);
+        }
+
+        public void Execute()
+        {
+            Origin.Unit.MoveTo(Destination);
+        }
 
         public override string ToString()
         {
@@ -48,40 +89,17 @@ namespace Diplomacy
         }
     }
 
-    class MoveOrder : Order
+
+    class OrderSolver
     {
-        public UnitType UnitType { get; set; }
+        private IEnumerable<OrderParser> Orders { get; set; }
 
-        public ILocation Origin { get; set; }
-
-        public ILocation Destination { get; set; }
-
-        public MoveOrder(string unitType, string origin, string destination)
-            : this(
-            ParseUnitType(unitType),
-            Program.Board.Locations.Single(l => l.Abbreviation == origin),
-            Program.Board.Locations.Single(l => l.Abbreviation == destination))
+        public void Solve()
         {
-        }
 
-        public MoveOrder(UnitType unitType, ILocation origin, ILocation destination)
-        {
-            UnitType = unitType;
-            Origin = origin;
-            Destination = destination;
-        }
-
-        public Boolean Validate()
-        {
-            var unit = Origin.Unit;
-            return unit != null && UnitType == unit.UnitType && unit.CanMoveTo(Destination);
-        }
-
-        public void Move()
-        {
-            Origin.Unit.MoveTo(Destination);
         }
     }
+
 
     enum OrderType
     {
