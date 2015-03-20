@@ -50,13 +50,17 @@
     <Compile Include="Board\SupplyCentre.cs" />
     <Compile Include="Board\Unit.cs" />
     <Compile Include="Board\UnitType.cs" />
+    <Compile Include="Orders\ConvoyOrder.cs" />
+    <Compile Include="Orders\HoldOrder.cs" />
     <Compile Include="Orders\IOrder.cs" />
     <Compile Include="Orders\MoveOrder.cs" />
     <Compile Include="Orders\OrderParser.cs" />
     <Compile Include="Orders\OrderSolver.cs" />
     <Compile Include="Orders\OrderType.cs" />
+    <Compile Include="Orders\SupportOrder.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="EuropeanBoardFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
