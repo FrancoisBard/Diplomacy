@@ -10,17 +10,17 @@ namespace Diplomacy.Orders
 
         private ILocation Location { get; set; }
 
-        private MoveOrder ConvoyedMove { get; set; } //todo chain convoy ?
+        private IOrder ConvoyedMove { get; set; }
 
-        public ConvoyOrder(string unitType, string location, string convoyedMoveUnitType, string convoyedMoveOrigin, string convoyedMoveDestination)
+        public ConvoyOrder(string unitType, string location, IOrder convoyedMove)
             : this(
                 OrderParser.ParseUnitType(unitType),
                 Program.Board.Locations.Single(l => l.Abbreviation == location),
-                new MoveOrder(convoyedMoveUnitType, convoyedMoveOrigin, convoyedMoveDestination))
+                convoyedMove)
         {
         }
 
-        private ConvoyOrder(UnitType unitType, ILocation location, MoveOrder convoyedMove)
+        private ConvoyOrder(UnitType unitType, ILocation location, IOrder convoyedMove)
         {
             UnitType = unitType;
             Location = location;

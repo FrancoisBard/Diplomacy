@@ -10,28 +10,28 @@ namespace Diplomacy.Orders
 
         private ILocation Location { get; set; }
 
-        private MoveOrder SupportedMove { get; set; }
+        private IOrder SupportedMoveOrHold { get; set; }
 
-        public SupportOrder(string unitType, string location, string supportedMoveUnitType, string supportedMoveOrigin, string supportedMoveDestination)
+        public SupportOrder(string unitType, string location, IOrder supportedMoveOrHold)
             : this(
                 OrderParser.ParseUnitType(unitType),
                 Program.Board.Locations.Single(l => l.Abbreviation == location),
-                new MoveOrder(supportedMoveUnitType, supportedMoveOrigin, supportedMoveDestination))
+                supportedMoveOrHold)
         {
         }
 
-        private SupportOrder(UnitType unitType, ILocation location, MoveOrder supportedMove)
+        private SupportOrder(UnitType unitType, ILocation location, IOrder supportedMoveOrHold)
         {
             UnitType = unitType;
             Location = location;
-            SupportedMove = supportedMove;
+            SupportedMoveOrHold = supportedMoveOrHold;
         }
 
         //shouldn't be here ?
         public Boolean Validate()
         {
             var unit = Location.Unit;
-            return unit != null && UnitType == unit.UnitType && SupportedMove.Validate();
+            return unit != null && UnitType == unit.UnitType && SupportedMoveOrHold.Validate();
 
             //todo check we are neighbor
         }
