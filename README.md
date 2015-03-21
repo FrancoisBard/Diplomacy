@@ -1,0 +1,6 @@
+# Diplomacy
+trying to implement a diplomacy game engine. very much a work in progress...
+
+in my wildest dreams, if I have time I'll add an order solver, other boards & game variants, AIs, simple graphics, release a desktop app, release a windows store app, release a mobile app, etc........
+
+[![Build status](https://ci.appveyor.com/api/projects/status/cicv5x37spr4bw4i/branch/master?svg=true)](https://ci.appveyor.com/project/FrancoisBard/diplomacy/branch/master)
