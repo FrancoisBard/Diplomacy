@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Diplomacy.Board
 {
-    interface ILocation
+    public interface ILocation
     {
         string Name { get; set; }
 

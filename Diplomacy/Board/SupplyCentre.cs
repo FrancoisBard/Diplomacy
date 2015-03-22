@@ -1,6 +1,6 @@
 namespace Diplomacy.Board
 {
-    class SupplyCentre
+    public class SupplyCentre
     {
         public Province Province { get; set; }
 

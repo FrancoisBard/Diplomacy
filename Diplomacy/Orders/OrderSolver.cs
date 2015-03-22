@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Diplomacy.Orders
 {
-    class OrderSolver
+    public class OrderSolver
     {
         private IEnumerable<IOrder> Orders { get; set; }
 

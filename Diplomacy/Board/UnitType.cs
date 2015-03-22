@@ -1,6 +1,6 @@
 namespace Diplomacy.Board
 {
-    enum UnitType
+    public enum UnitType
     {
         Army,
         Fleet

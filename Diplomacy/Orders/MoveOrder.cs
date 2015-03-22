@@ -4,7 +4,7 @@ using Diplomacy.Board;
 
 namespace Diplomacy.Orders
 {
-    class MoveOrder : IOrder
+    public class MoveOrder : IOrder
     {
         private UnitType UnitType { get; set; }
 
@@ -12,15 +12,15 @@ namespace Diplomacy.Orders
 
         private ILocation Destination { get; set; }
 
-        public MoveOrder(string unitType, string origin, string destination)
+        public MoveOrder(Board.Board board, string unitType, string origin, string destination)
             : this(
                 OrderParser.ParseUnitType(unitType),
-                Program.Board.Locations.Single(l => l.Abbreviation == origin),
-                Program.Board.Locations.Single(l => l.Abbreviation == destination))
+                board.Locations.Single(l => l.Abbreviation == origin),
+                board.Locations.Single(l => l.Abbreviation == destination))
         {
         }
 
-        private MoveOrder(UnitType unitType, ILocation origin, ILocation destination)
+        public MoveOrder(UnitType unitType, ILocation origin, ILocation destination)
         {
             UnitType = unitType;
             Origin = origin;
@@ -41,7 +41,10 @@ namespace Diplomacy.Orders
 
         public override string ToString()
         {
-            throw new NotImplementedException();
+            return String.Format("{0} {1}-{2}", 
+                OrderParser.GetUnitTypeAbbreviation(UnitType), 
+                Origin.Abbreviation, 
+                Destination.Abbreviation);
         }
     }
 }

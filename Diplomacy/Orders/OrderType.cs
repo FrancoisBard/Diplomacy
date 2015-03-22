@@ -1,6 +1,6 @@
 namespace Diplomacy.Orders
 {
-    enum OrderType
+    public enum OrderType
     {
         Hold,
         Attack,

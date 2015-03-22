@@ -22,7 +22,9 @@ namespace Diplomacy
                     Console.WriteLine();
 
                     var orderString = Console.ReadLine();
-                    var order = OrderParser.Parse(orderString);
+
+                    var orderParser = new OrderParser(Board);
+                    var order = orderParser.Parse(orderString);
                     if (!order.Validate())
                     {
                         Console.WriteLine("invalid move");

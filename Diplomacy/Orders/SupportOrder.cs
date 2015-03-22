@@ -4,34 +4,34 @@ using Diplomacy.Board;
 
 namespace Diplomacy.Orders
 {
-    class SupportOrder : IOrder
+    public class SupportOrder : IOrder
     {
         private UnitType UnitType { get; set; }
 
         private ILocation Location { get; set; }
 
-        private IOrder SupportedMoveOrHold { get; set; }
+        private IOrder SupportedMoveOrHoldOrder { get; set; }
 
-        public SupportOrder(string unitType, string location, IOrder supportedMoveOrHold)
+        public SupportOrder(Board.Board board, string unitType, string location, IOrder supportedMoveOrHoldOrder)
             : this(
                 OrderParser.ParseUnitType(unitType),
-                Program.Board.Locations.Single(l => l.Abbreviation == location),
-                supportedMoveOrHold)
+                board.Locations.Single(l => l.Abbreviation == location),
+                supportedMoveOrHoldOrder)
         {
         }
 
-        private SupportOrder(UnitType unitType, ILocation location, IOrder supportedMoveOrHold)
+        public SupportOrder(UnitType unitType, ILocation location, IOrder supportedMoveOrHoldOrder)
         {
             UnitType = unitType;
             Location = location;
-            SupportedMoveOrHold = supportedMoveOrHold;
+            SupportedMoveOrHoldOrder = supportedMoveOrHoldOrder;
         }
 
         //shouldn't be here ?
         public Boolean Validate()
         {
             var unit = Location.Unit;
-            return unit != null && UnitType == unit.UnitType && SupportedMoveOrHold.Validate();
+            return unit != null && UnitType == unit.UnitType && SupportedMoveOrHoldOrder.Validate();
 
             //todo check we are neighbor
         }
@@ -43,7 +43,10 @@ namespace Diplomacy.Orders
 
         public override string ToString()
         {
-            throw new NotImplementedException();
+            return String.Format("{0} {1} S {2}",
+                OrderParser.GetUnitTypeAbbreviation(UnitType),
+                Location.Abbreviation,
+                SupportedMoveOrHoldOrder.ToString());
         }
     }
 }

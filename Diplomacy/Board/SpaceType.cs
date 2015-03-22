@@ -1,6 +1,6 @@
 namespace Diplomacy.Board
 {
-    enum SpaceType
+    public enum SpaceType
     {
         Land,
         LandWithOneCoastline,

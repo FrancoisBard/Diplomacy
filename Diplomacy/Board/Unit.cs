@@ -2,7 +2,7 @@ using System;
 
 namespace Diplomacy.Board
 {
-    class Unit
+    public class Unit
     {
         public UnitType UnitType { get; set; }
 

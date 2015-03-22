@@ -2,7 +2,7 @@ using System;
 
 namespace Diplomacy.Orders
 {
-    interface IOrder
+    public interface IOrder
     {
         Boolean Validate();
         void Execute();

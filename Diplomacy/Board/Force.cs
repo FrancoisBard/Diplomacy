@@ -1,6 +1,6 @@
 namespace Diplomacy.Board
 {
-    enum Force
+    public enum Force
     {
         Russia,
         France,

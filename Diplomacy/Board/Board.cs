@@ -2,7 +2,7 @@
 
 namespace Diplomacy.Board
 {
-    class Board
+    public class Board
     {
         public HashSet<ILocation> Locations { get; set; }
 

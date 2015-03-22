@@ -4,34 +4,34 @@ using Diplomacy.Board;
 
 namespace Diplomacy.Orders
 {
-    class ConvoyOrder : IOrder
+    public class ConvoyOrder : IOrder
     {
         private UnitType UnitType { get; set; }
 
         private ILocation Location { get; set; }
 
-        private IOrder ConvoyedMove { get; set; }
+        private IOrder ConvoyedMoveOrder { get; set; }
 
-        public ConvoyOrder(string unitType, string location, IOrder convoyedMove)
+        public ConvoyOrder(Board.Board board, string unitType, string location, IOrder convoyedMoveOrder)
             : this(
                 OrderParser.ParseUnitType(unitType),
-                Program.Board.Locations.Single(l => l.Abbreviation == location),
-                convoyedMove)
+                board.Locations.Single(l => l.Abbreviation == location),
+                convoyedMoveOrder)
         {
         }
 
-        private ConvoyOrder(UnitType unitType, ILocation location, IOrder convoyedMove)
+        public ConvoyOrder(UnitType unitType, ILocation location, IOrder convoyedMoveOrder)
         {
             UnitType = unitType;
             Location = location;
-            ConvoyedMove = convoyedMove;
+            ConvoyedMoveOrder = convoyedMoveOrder;
         }
 
         //shouldn't be here ?
         public Boolean Validate()
         {
             var unit = Location.Unit;
-            return unit != null && UnitType == unit.UnitType && ConvoyedMove.Validate();
+            return unit != null && UnitType == unit.UnitType && ConvoyedMoveOrder.Validate();
 
             //todo check we are neighbor
         }
@@ -43,7 +43,10 @@ namespace Diplomacy.Orders
 
         public override string ToString()
         {
-            throw new NotImplementedException();
+            return String.Format("{0} {1} C {2}",
+                OrderParser.GetUnitTypeAbbreviation(UnitType),
+                Location.Abbreviation,
+                ConvoyedMoveOrder.ToString());
         }
     }
 }

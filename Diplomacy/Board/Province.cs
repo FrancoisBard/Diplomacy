@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Diplomacy.Board
 {
-    class Province : ILocation
+    public class Province : ILocation
     {
         public string Name { get; set; }
 

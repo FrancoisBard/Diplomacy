@@ -4,20 +4,20 @@ using Diplomacy.Board;
 
 namespace Diplomacy.Orders
 {
-    class HoldOrder : IOrder
+    public class HoldOrder : IOrder
     {
         private UnitType UnitType { get; set; }
 
         private ILocation Location { get; set; }
 
-        public HoldOrder(string unitType, string location)
+        public HoldOrder(Board.Board board, string unitType, string location)
             : this(
                 OrderParser.ParseUnitType(unitType),
-                Program.Board.Locations.Single(l => l.Abbreviation == location))
+                board.Locations.Single(l => l.Abbreviation == location))
         {
         }
 
-        private HoldOrder(UnitType unitType, ILocation location)
+        public HoldOrder(UnitType unitType, ILocation location)
         {
             UnitType = unitType;
             Location = location;
@@ -37,7 +37,9 @@ namespace Diplomacy.Orders
 
         public override string ToString()
         {
-            throw new NotImplementedException();
+            return String.Format("{0} {1} H",
+                OrderParser.GetUnitTypeAbbreviation(UnitType),
+                Location.Abbreviation);
         }
     }
 }
