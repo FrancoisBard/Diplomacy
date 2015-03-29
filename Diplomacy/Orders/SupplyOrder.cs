@@ -4,30 +4,26 @@ using Diplomacy.Board;
 
 namespace Diplomacy.Orders
 {
-    public class BuildOrDisbandOrder : IOrder
+    /// <summary>
+    /// Supply order (Build or Disband) 
+    /// </summary>
+    public class SupplyOrder : IOrder
     {
-        private UnitType UnitType { get; set; }
+        public UnitType UnitType { get; private set; }
 
-        private ILocation Location { get; set; }
+        public ILocation Location { get; private set; }
 
-        public BuildOrDisbandOrder(Board.Board board, string unitType, string location)
+        public SupplyOrder(Board.Board board, string unitType, string location)
             : this(
                 OrderParser.ParseUnitType(unitType),
                 board.Locations.Single(l => l.Abbreviation == location))
         {
         }
 
-        public BuildOrDisbandOrder(UnitType unitType, ILocation location)
+        public SupplyOrder(UnitType unitType, ILocation location)
         {
             UnitType = unitType;
             Location = location;
-        }
-
-        //shouldn't be here ?
-        public Boolean Validate()
-        {
-            var unit = Location.Unit;
-            return unit != null && UnitType == unit.UnitType;
         }
 
         public void Execute()

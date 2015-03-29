@@ -115,7 +115,7 @@ namespace Diplomacy.Orders
             }
             else
             {
-                return new BuildOrDisbandOrder(Board, unitType, location);
+                return new SupplyOrder(Board, unitType, location);
             }
         }
 
