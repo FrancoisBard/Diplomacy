@@ -1,10 +1,13 @@
 using System;
+using Diplomacy.Board;
 
 namespace Diplomacy.Orders
 {
     public interface IOrder
     {
-        Board.Force Force { get; set; }
+        Force Force { get; set; }
+
+        UnitType UnitType { get; }
 
         Boolean Validate();
 

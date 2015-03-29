@@ -9,6 +9,8 @@ namespace Diplomacy.Orders
     /// </summary>
     public class SupplyOrder : IOrder
     {
+        public Force Force { get; set; }
+
         public UnitType UnitType { get; private set; }
 
         public ILocation Location { get; private set; }
@@ -29,6 +31,12 @@ namespace Diplomacy.Orders
         public void Execute()
         {
             //do nothing
+        }
+
+        public bool Validate()
+        {
+            //do nothing
+            return false;
         }
 
         public override string ToString()

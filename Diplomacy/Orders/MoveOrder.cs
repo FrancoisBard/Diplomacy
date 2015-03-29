@@ -9,11 +9,13 @@ namespace Diplomacy.Orders
     /// </summary>
     public class MoveOrder : IOrder
     {
-        private UnitType UnitType { get; set; }
+        public Force Force { get; set; }
 
-        private ILocation Origin { get; set; }
+        public UnitType UnitType { get; set; }
 
-        private ILocation Destination { get; set; }
+        public ILocation Origin { get; set; }
+
+        public ILocation Destination { get; set; }
 
         public MoveOrder(Board.Board board, string unitType, string origin, string destination)
             : this(

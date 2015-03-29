@@ -6,9 +6,11 @@ namespace Diplomacy.Orders
 {
     public class HoldOrder : IOrder
     {
-        private UnitType UnitType { get; set; }
+        public Force Force { get; set; }
 
-        private ILocation Location { get; set; }
+        public UnitType UnitType { get; set; }
+
+        public ILocation Location { get; set; }
 
         public HoldOrder(Board.Board board, string unitType, string location)
             : this(
