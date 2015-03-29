@@ -5,6 +5,9 @@ using Diplomacy.Orders;
 
 namespace Diplomacy
 {
+    /// <summary>
+    /// https://www.wizards.com/avalonhill/rules/diplomacy.pdf
+    /// </summary>
     class Program
     {
         public static Board.Board Board;

@@ -50,7 +50,9 @@
     <Compile Include="Board\SupplyCentre.cs" />
     <Compile Include="Board\Unit.cs" />
     <Compile Include="Board\UnitType.cs" />
+    <Compile Include="GamePhases\GamePhases.cs" />
     <Compile Include="Orders\ConvoyOrder.cs" />
+    <Compile Include="Orders\BuildOrDisbandOrder.cs" />
     <Compile Include="Orders\HoldOrder.cs" />
     <Compile Include="Orders\IOrder.cs" />
     <Compile Include="Orders\MoveOrder.cs" />

@@ -40,7 +40,7 @@ namespace Diplomacy.Orders
         private IOrder TryParseConvoyOrSupportOrder(string order)
         {
             var convoyOrSupportRegex = new Regex(
-                @"^(?<unitType>[AF]) (?<location>\w{3}( \w{2})?) (?<orderType>[SC]) (?<supportedOrConvoyedOrder>.*)$", 
+                @"^(?<unitType>[AF]) (?<location>\w{3}( \w{2})?) (?<orderType>[SC]) (?<supportedOrConvoyedOrder>.*)$",
                 RegexOptions.IgnoreCase);
 
             var match = convoyOrSupportRegex.Match(order);
@@ -95,7 +95,7 @@ namespace Diplomacy.Orders
         private IOrder TryParseHoldOrder(string order)
         {
             var holdRegex = new Regex(
-                @"^(?<unitType>[AF]) (?<location>\w{3}( \w{2})?) H$", 
+                @"^(?<unitType>[AF]) (?<location>\w{3}( \w{2})?) (?<hold>H)$",
                 RegexOptions.IgnoreCase);
 
             var match = holdRegex.Match(order);
@@ -107,8 +107,16 @@ namespace Diplomacy.Orders
 
             var unitType = match.Groups["unitType"].Value.ToUpperInvariant();
             var location = match.Groups["location"].Value.ToUpperInvariant();
+            var hold = match.Groups["hold"].Value.ToUpperInvariant();
 
-            return new HoldOrder(Board, unitType, location);
+            if (hold == "H")
+            {
+                return new HoldOrder(Board, unitType, location);
+            }
+            else
+            {
+                return new BuildOrDisbandOrder(Board, unitType, location);
+            }
         }
 
         public static UnitType ParseUnitType(string unitType)

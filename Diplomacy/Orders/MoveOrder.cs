@@ -4,6 +4,9 @@ using Diplomacy.Board;
 
 namespace Diplomacy.Orders
 {
+    /// <summary>
+    /// Move or Retreat order
+    /// </summary>
     public class MoveOrder : IOrder
     {
         private UnitType UnitType { get; set; }
