@@ -17,10 +17,57 @@ namespace DiplomacyTests
 
             var actualOrder = orderParser.Parse(orderString);
 
-            Assert.True(expectedOrder.GetType() == actualOrder.GetType());
-            
-            //todo tests fields.
+            CompareOrders(expectedOrder, actualOrder);
         }
+
+        private static void CompareOrders(IOrder expectedOrder, IOrder actualOrder)
+        {
+            Assert.True(expectedOrder.GetType() == actualOrder.GetType());
+
+            //tests common fields.
+            Assert.Equal(expectedOrder.UnitType, actualOrder.UnitType);
+
+            //tests special fields.
+            var type = expectedOrder.GetType();
+            if (type == typeof(MoveOrder))
+            {
+                var expectedTypedOrder = (MoveOrder)expectedOrder;
+                var actualTypedOrder = (MoveOrder)actualOrder;
+
+                Assert.Equal(expectedTypedOrder.Destination, actualTypedOrder.Destination);
+                Assert.Equal(expectedTypedOrder.Origin, actualTypedOrder.Origin);
+            }
+            else if (type == typeof(HoldOrder))
+            {
+                var expectedTypedOrder = (HoldOrder)expectedOrder;
+                var actualTypedOrder = (HoldOrder)actualOrder;
+
+                Assert.Equal(expectedTypedOrder.Location, actualTypedOrder.Location);
+            }
+            else if (type == typeof(ConvoyOrder))
+            {
+                var expectedTypedOrder = (ConvoyOrder)expectedOrder;
+                var actualTypedOrder = (ConvoyOrder)actualOrder;
+
+                Assert.Equal(expectedTypedOrder.Location, actualTypedOrder.Location);
+
+                CompareOrders(expectedTypedOrder.ConvoyedMoveOrder, actualTypedOrder.ConvoyedMoveOrder);
+            }
+            else if (type == typeof(SupportOrder))
+            {
+                var expectedTypedOrder = (SupportOrder)expectedOrder;
+                var actualTypedOrder = (SupportOrder)actualOrder;
+
+                Assert.Equal(expectedTypedOrder.Location, actualTypedOrder.Location);
+
+                CompareOrders(expectedTypedOrder.SupportedMoveOrHoldOrder, actualTypedOrder.SupportedMoveOrHoldOrder);
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         /// <summary>
         /// 
         /// </summary>
