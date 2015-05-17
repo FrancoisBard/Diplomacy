@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using Xunit.Extensions;
 using System.Linq;
 
-namespace DiplomacyTests
+namespace DiplomacyTests.Orders
 {
     public class OrderParserTest
     {

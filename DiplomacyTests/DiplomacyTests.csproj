@@ -58,7 +58,8 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="OrderParserTest.cs" />
+    <Compile Include="Orders\OrderParserTest.cs" />
+    <Compile Include="Orders\SupplyJudgeTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

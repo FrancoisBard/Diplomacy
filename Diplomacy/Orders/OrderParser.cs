@@ -13,9 +13,9 @@ namespace Diplomacy.Orders
             this.Board = board;
         }
 
-        //todo i could have only one regex... ?
         public IOrder Parse(string order)
         {
+            //todo i could have only one regex... ?
 
             var iOrder = TryParseMoveOrHoldOrder(order);
             if (iOrder != null)

@@ -7,10 +7,10 @@ using Diplomacy.Board;
 
 namespace Diplomacy.Orders
 {
-    class SupplyJudge
+    public class SupplyJudge
     {
         private Board.Board Board;
-        public IDictionary<Force, int> AdditionalUnitsNeededForEachForce; //todo make it immutable ?
+        private IDictionary<Force, int> AdditionalUnitsNeededForEachForce; //todo make it immutable ?
 
         public SupplyJudge(Board.Board board)
         {
@@ -73,8 +73,8 @@ namespace Diplomacy.Orders
             }
 
             //check that the location is a supply centre and it's owned by the right Force
-            var province = (Province)order.Location; //todo could throw
-            if (province.SupplyCentre == null || province.SupplyCentre.Owner != order.Force)
+            var province = order.Location as Province;
+            if (province == null || province.SupplyCentre == null || province.SupplyCentre.Owner != order.Force)
             {
                 return false;
             }
@@ -85,7 +85,6 @@ namespace Diplomacy.Orders
                 return false;
             }
 
-            //todo more ????
             return true;
         }
     }
