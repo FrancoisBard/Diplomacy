@@ -63,7 +63,7 @@
     <Compile Include="Orders\SupportOrder.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="EuropeanBoardFactory.cs" />
+    <Compile Include="Versions\Europe\EuropeanBoardFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
